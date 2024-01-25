@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    // GETTER
+
+    //INSTANCE METHOD
   }
   Menu.init({
     name: DataTypes.STRING,

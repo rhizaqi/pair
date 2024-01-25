@@ -1,69 +1,8 @@
+const rupiah = require("../helpers/helper")
 const {Shop, Profile, Menu} = require("../models")
 const bcrypt = require('bcryptjs')
 
-class Controller {
-    static async shop(req, res){
-        try {
-            let data = await Shop.findAll()
-            // console.log(data);
-            res.render('shop', {data})
-        } catch (error) {
-            throw error
-        }
-    }
-    
-    static async profile(req, res){
-        try {
-            let data = await Profile.findAll()
-            // console.log(data);
-            res.render('profile', {data})
-        } catch (error) {
-            throw error
-        }
-    }
-    
-    static async renderAdd(req, res){
-        try {
-
-            res.render('addProfile')
-        } catch (error) {
-            throw error
-        }
-    }
-    
-    static async handlerAdd(req, res){
-        try {
-
-            res.redirect('profile')
-        } catch (error) {
-            throw error
-        }
-    }
-
-    static async detailShop(req, res){
-        try {
-            const {id} = req.params
-
-            let data = await Shop.findByPk({
-                where : {
-                    id
-                }
-            })
-            res.render('detailShop')
-        } catch (error) {
-            throw error
-        }
-    }
-
-    static async menus(req, res){
-        try {
-            let data = await Menu.findAll()
-            console.log(data);
-            res.render('menu', {data})
-        } catch (error) {
-            throw error
-        }
-    }
+class Controller {    
 
     static async formRegister(req, res){
         try {
@@ -96,10 +35,7 @@ class Controller {
 
     static async postLogin(req, res){
         try {
-            // findOne / findByPk dari username
-            // kalo ada, compare plain password ? = hash password db
-            // plain !== hash , error
-            // plain === hash, redirect
+
             const {username, password} = req.body
 
             let data = await Profile.findOne({
@@ -107,24 +43,86 @@ class Controller {
                     username : username
                 }
             })
-            let isTrue
-            
-            if (username) {
-                 isTrue = await bcrypt.compare( password, data.password)
+            // console.log(data);
+            if (data) {
+                let isTrue = await bcrypt.compare( password, data.password)
+                if (isTrue) {
 
-            } 
-            if (isTrue){
+                    req.session.userId = data.id
+                    req.session.name = data.username
+                    req.session.role = data.role
 
-                return res.redirect('/menu')
-
-            } else {
-
-                const newErr = "Your username/password is not correct"
-                return res.redirect(`/login?error=${newErr}`)
+                    res.redirect('/menu')
+                } else {
+                    let newErr = "Your username/password is not correct"
+                    res.redirect(`/login?error=${newErr}`)
+                }
+            }else{
+                let newErr = "Your username/password is not correct"
+                res.redirect(`/login?error=${newErr}`) 
             }
 
         } catch (error) {
             
+            throw error
+        }
+    }
+
+    static async menus(req, res){
+        try {
+            let data = await Menu.findAll()
+            // console.log(data);
+            res.render('menu', {data})
+        } catch (error) {
+            throw error
+        }
+    }
+
+    static async detailShop(req, res){
+        try {
+            const {id} = req.params
+
+            let data = await Shop.findByPk({
+                where : {
+                    id
+                }
+            })
+            res.render('detailShop')
+        } catch (error) {
+            throw error
+        }
+    }
+
+    static async shop(req, res){
+        try {
+            let data = await Shop.findAll()
+            // console.log(data);
+            res.render('shop', {data})
+        } catch (error) {
+            throw error
+        }
+    }
+
+    static async profile(req, res){
+        try {
+            let data = await Profile.findAll()
+            // console.log(data);
+            res.render('profile', {data})
+        } catch (error) {
+            throw error
+        }
+    }
+
+    static async logout(req, res){
+        try {
+            req.session.destroy((error)=>{
+                if(error){
+                    res.send(error)
+                }else{
+                    res.redirect('login')
+                }
+            })
+        } catch (error) {
             throw error
         }
     }
