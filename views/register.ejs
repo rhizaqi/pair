@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Register </title>
+</head>
+<body>
+    <h2> register </h2>
+    <form action="/profile/register" method="post">
+        <p>
+            <label> Username </label>
+            <input type="text" name="username">
+        </p>
+        <p>
+            <label> Password </label>
+            <input type="text" name="password">
+        </p>
+        <p>
+            <label> Phone Number </label>
+            <input type="text" name="phone">
+        </p>
+        <p>
+            <label> Email </label>
+            <input type="text" name="email">
+        </p>
+        <p>
+            <label> Role </label>
+            <select name="role">
+                <option selected disabled> Register as </option>
+                <option value="Staff"> Staff </option>
+                <option value="Customer"> Customer </option>
+            </select>
+        </p>
+        <p>
+            <label> Profile Picture </label>
+            <input type="text" name="imageURL">
+        </p>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
