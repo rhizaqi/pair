@@ -158,13 +158,74 @@ class Controller {
         }
     }
     
+    static async renderEdit(req, res){
+        try {
+            const {shopId, menuId} = req.params
+            
+        } catch (error) {
+            throw error
+        }
+    }
+
     static async shopOne(req, res){
         try {
            const {shopId} = req.params
 
            let shop = await Shop.findByPk(shopId)
            let menu = await Menu.findAll()
+
            res.render('shopdetail', {shop, menu, rupiah})
+        } catch (error) {
+            throw error
+        }
+    }
+    
+    static async renderEdit(req, res){
+        try {
+            const {menuId} = req.params
+
+            let menu = await Menu.findOne({
+                where : {
+                    id : menuId
+                }
+            })
+            
+            res.render('editMenu', {menu})
+        } catch (error) {
+            throw error
+        }
+    }
+        
+    static async handlerEdit(req, res){
+        try {
+            const {menuId} = req.params
+
+            const{name, type, price, location, imageURL} = req.body
+
+            await Menu.update({name, type, price, shopId:location, imageURL},{
+                where :{
+                    id : menuId
+                }
+            })
+
+            res.redirect(`/shop/${location}`)
+
+        } catch (error) {
+            throw error
+        }
+    }
+
+    static async deleteMenu(req, res){
+        try {
+            const {shopId, menuId} = req.params
+
+            await Menu.destroy({
+                where : {
+                    id:menuId
+                }
+            })
+            
+            res.redirect(`/shop/${shopId}`)
         } catch (error) {
             throw error
         }

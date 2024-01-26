@@ -39,13 +39,13 @@
                         <div class="card-body">
                           <h5 class="card-title"> <%= rupiah(el.price) %></h5>
                           <p class="card-text"> <%= el.name %></p>
-                          <a href="/menu/edit/<%= el.id %>" class="btn btn-primary"> Edit Menu </a>
+                          <a href="/shop/editMenu/<%= shop.id %>/menu/<%= el.id %>" class="btn btn-primary"> Edit Menu </a>
+                          <a href="/shop/<%= shop.id %>/delete/<%= el.id %>" class="btn btn-primary"> Delete Menu </a>
                         </div>
                       </div>
                 </div>
             <% }) %>
         </div>
     </div>
-    
 </body>
 </html>
