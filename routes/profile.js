@@ -3,7 +3,5 @@ const Controller = require('../contollers/controller')
 const router = express.Router()
 
 router.get('/', Controller.profile)
-router.get('/', Controller.menus)
-
 
 module.exports = router

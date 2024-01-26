@@ -38,7 +38,7 @@ let staff = function(req, res, next) {
 
 router.get('/logout', Controller.logout)
 
-router.use('/shop', routerShop)
+router.use('/shop', staff, routerShop)
 router.use('/profile', staff, routerProfile)
 router.use('/menu', customer, routerMenu)
 

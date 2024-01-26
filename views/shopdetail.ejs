@@ -15,6 +15,9 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/shop/addMenu/<%= shop.id %>" > Add Menu </a>
+              </li>
               <li>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -26,22 +29,23 @@
           </div>
         </div>
     </nav>
-
+    
     <div class="container">
         <div class="row">
-            <% data.forEach(el => { %>
+            <% menu.forEach(el => { %>
                 <div class="mb-4 col-4">
                     <div class="card" style="width: 25rem;">
                         <img src="<%= el.imageURL %>">
                         <div class="card-body">
                           <h5 class="card-title"> <%= rupiah(el.price) %></h5>
                           <p class="card-text"> <%= el.name %></p>
-                          <a href="/menu/buy/<%= el.id %>" class="btn btn-primary"> Go buy </a>
+                          <a href="/menu/edit/<%= el.id %>" class="btn btn-primary"> Edit Menu </a>
                         </div>
                       </div>
                 </div>
             <% }) %>
         </div>
     </div>
+    
 </body>
 </html>

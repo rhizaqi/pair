@@ -52,7 +52,12 @@ class Controller {
                     req.session.name = data.username
                     req.session.role = data.role
 
+                    if(req.session.role === 'Staff'){
+                        res.redirect('/shop')
+                    }else{
                     res.redirect('/menu')
+
+                    }
                 } else {
                     let newErr = "Your username/password is not correct"
                     res.redirect(`/login?error=${newErr}`)
@@ -68,11 +73,11 @@ class Controller {
         }
     }
 
-    static async menus(req, res){
+    static async shop(req, res){
         try {
-            let data = await Menu.findAll()
+            let data = await Shop.findAll()
             // console.log(data);
-            res.render('menu', {data})
+            res.render('shop', {data})
         } catch (error) {
             throw error
         }
@@ -93,11 +98,11 @@ class Controller {
         }
     }
 
-    static async shop(req, res){
+    static async menus(req, res){
         try {
-            let data = await Shop.findAll()
+            let data = await Menu.findAll()
             // console.log(data);
-            res.render('shop', {data})
+            res.render('menu', {data, rupiah})
         } catch (error) {
             throw error
         }
@@ -126,6 +131,46 @@ class Controller {
             throw error
         }
     }
+
+    static async renderMenu(req, res){
+        try {
+            const {shopId} = req.params
+
+            let shop = await Shop.findByPk(shopId)
+
+            res.render('addMenu', {shop})
+            
+        } catch (error) {
+            throw error
+        }
+    }
+  
+    static async addMenu(req, res){
+        try {
+
+            const{name, type, price, location, imageURL} = req.body
+
+            await Menu.create({name, type, price, shopId:location, imageURL})
+
+            res.redirect(`/shop/${location}`)
+        } catch (error) {
+            throw error
+        }
+    }
+    
+    static async shopOne(req, res){
+        try {
+           const {shopId} = req.params
+
+           let shop = await Shop.findByPk(shopId)
+           let menu = await Menu.findAll()
+           res.render('shopdetail', {shop, menu, rupiah})
+        } catch (error) {
+            throw error
+        }
+    }
+
+
 }
 
 module.exports = Controller

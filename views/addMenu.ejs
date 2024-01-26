@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Add Menu </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar bg-primary" data-bs-theme="dark">
+        <div class="container">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"> Add Menu </a>
+            </div>
+        </div>
+        <a class="btn btn-primary" href="/" role="button"> </a> </center>
+    </nav>
+
+    <form action="/shop/addMenu/<%= shop.id %>" method="post">
+        <p>
+            <label> Shop Location </label>
+            <select name="location">
+                <option selected disabled> Choose Shop </option>
+                <option value="3"> Wiyung </option>
+                <option value="4"> Ngagel </option>
+            </select>
+        </p>
+        <p>
+            <label> Name </label>
+            <input type="text" name="name">
+        </p>
+        <p>
+            <label> Type </label>
+            <select name="type">
+                <option selected disabled> --Menu Type-- </option>
+                <option value="hot"> Hot </option>
+                <option value="ice"> Ice </option>
+                <option value="pastry"> Pastry </option>
+            </select>
+        </p>
+        <p>
+            <label> Price </label>
+            <input type="number" name="price">
+        </p>
+        <p>
+            <label> Image </label>
+            <input type="text" name="imageURL">
+        </p>
+        <input type="submit" value="Add Menu">
+    </form>
+</body>
+</html>
